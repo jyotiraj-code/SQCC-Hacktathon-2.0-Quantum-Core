@@ -1,0 +1,1 @@
+# SQCC-Hacktathon-2.0-Quantum-Core
