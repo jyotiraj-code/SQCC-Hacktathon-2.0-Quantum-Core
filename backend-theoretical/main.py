@@ -60,6 +60,13 @@ def main(er, budget=None):
         file_name = f"result.txt"
         with open(os.path.join(f"{folder}", file_name), "w") as f:
             f.write("\n".join(comments))
+        
+        higher_prob_key_reversed = max(probs, key=probs.get)[::-1]
+        higher_prob_key = max(probs, key=probs.get)
+        best_known_solution = bks
+        approximation_ratio = ratio
+
+        return higher_prob_key_reversed, higher_prob_key, best_known_solution, approximation_ratio
 
         # utils.is_apply_noise = True
 
