@@ -8,14 +8,13 @@ import Utilities
 import datetime
 
 
-def main():
+def main(er, budget=None):
     p = 1
     m = 5
 
-    # Apple and Microsoft
-    er = [0.185895, 0.194126, 0.177782, 0.182612, 0.283484]
+    if budget is None:
+        budget = len(er) // 2
 
-    budget = len(er) // 2
     prices = [1] * len(er)
     problem = knapsack.KnapsackProblem(er, prices, budget)
 
