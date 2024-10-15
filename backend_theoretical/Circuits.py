@@ -6,7 +6,7 @@ from qiskit import Aer, transpile, execute
 from qiskit.circuit import Parameter
 import numpy as np
 import math
-from KnapsackMethod import KnapsackProblem
+from .KnapsackMethod import KnapsackProblem
 
 class QFT(QuantumCircuit):
     def __init__(self, register):

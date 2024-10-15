@@ -1,10 +1,10 @@
-from QAOA import QuantumWalkQAOA
+from .QAOA import QuantumWalkQAOA
 import matplotlib.pyplot as plt
 
 import os
-import KnapsackMethod
-import MeanVariance
-import Utilities
+from . import KnapsackMethod
+from . import MeanVariance
+from . import Utilities
 import datetime
 
 
@@ -16,24 +16,24 @@ def main(er, budget=None):
         budget = len(er) // 2
 
     prices = [1] * len(er)
-    problem = knapsack.KnapsackProblem(er, prices, budget)
+    problem = KnapsackMethod.KnapsackProblem(er, prices, budget)
 
-    bks = knapsack.classical_solutions(problem)
+    bks = KnapsackMethod.classical_solutions(problem)
 
     for p in range(1, 6):
-        utils.is_apply_noise = False
+        Utilities.is_apply_noise = False
 
         print(f"Problem: {problem}")
         print("Building Circuit...")
         circuit = QuantumWalkQAOA(problem, p=p, m=m)
         print("Done!")
         print("Optimizing Angles...")
-        angles = utils.find_optimal_angles(circuit, problem)
+        angles = Utilities.find_optimal_angles(circuit, problem)
         print("Done!")
         print(f"Optimized Angles: {angles}")
-        probs = utils.get_probs_dict(circuit, problem, angles)
+        probs = Utilities.get_probs_dict(circuit, problem, angles)
         print(f"Probabilities of Bitstrings: {probs}")
-        ratio = utils.approximation_ratio(problem, probs)
+        ratio = Utilities.approximation_ratio(problem, probs)
         print(f"Approximation Ratio: {ratio}")
 
         os.makedirs("plots", exist_ok=True)
@@ -44,7 +44,6 @@ def main(er, budget=None):
         os.makedirs(folder, exist_ok=True)
         fig, ax = plt.subplots()
         fig.set_size_inches(18, 10)
-        hist(ax, probs, folder=f"{folder}")
 
         comments = [
             f"Considered {problem}",

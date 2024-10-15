@@ -5,8 +5,8 @@ from qiskit import QuantumRegister, QuantumCircuit
 from qiskit.circuit import Parameter
 import numpy as np
 import math
-from KnapsackMethod import KnapsackProblem
-from Circuits import DephaseValue, QuantumWalkMixer
+from .KnapsackMethod import KnapsackProblem
+from .Circuits import DephaseValue, QuantumWalkMixer
 
 class QuantumWalkQAOA(QuantumCircuit):
     def __init__(self, problem: KnapsackProblem, p: int, m: int):

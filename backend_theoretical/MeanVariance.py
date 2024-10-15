@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 
 from pypfopt import risk_models, expected_returns, EfficientFrontier
+from .KnapsackMethod import KnapsackProblem
 
 class MeanVarianceMethod:
     def __init__(self, stocks, start_date, end_date):
@@ -29,14 +30,14 @@ class MeanVarianceMethod:
         weights = ef.clean_weights()
         return list(weights.values())
 
-# Example usage
-if __name__ == "__main__":
-    stocks = ["AAPL", "GOOGL", "MSFT", "AMZN"]
-    start_date = "2020-01-01"
-    end_date = "2023-01-01"
+# # Example usage
+# if __name__ == "__main__":
+#     stocks = ["AAPL", "GOOGL", "MSFT", "AMZN"]
+#     start_date = "2020-01-01"
+#     end_date = "2023-01-01"
     
-    mv_method = MeanVarianceMethod(stocks, start_date, end_date)
-    optimized_weights = mv_method.weights()
+#     mv_method = MeanVarianceMethod(stocks, start_date, end_date)
+#     optimized_weights = mv_method.weights()
     
-    print("Optimized Weights for Mean-Variance Portfolio as a list:")
-    print(optimized_weights)
+#     print("Optimized Weights for Mean-Variance Portfolio as a list:")
+#     print(optimized_weights)

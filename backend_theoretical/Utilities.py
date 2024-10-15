@@ -3,11 +3,11 @@ import numpy as np
 from qiskit import Aer, transpile
 from qiskit.providers.aer import QasmSimulator
 from scipy.optimize import shgo
-import KnapsackMethod
-import circuits
+from . import KnapsackMethod
+from . import Circuits
 from qiskit import BasicAer
 
-backend = BasicAer.get_backend("statevector_simulator")
+backend = Aer.get_backend("aer_simulator_statevector")
 is_apply_noise = False
 
 def get_statevector(transpiled_circuit, parameter_dict):
@@ -80,8 +80,8 @@ def find_optimal_angles(circuit, problem):
 
 def comparable_objective_function(bitstring, problem):
     choice = bitstring_to_choice(bitstring, problem)
-    if knapsack.is_choice_feasible(choice, problem):
-        return knapsack.value(choice, problem)
+    if KnapsackMethod.is_choice_feasible(choice, problem):
+        return KnapsackMethod.value(choice, problem)
     return 0
 
 def comparable_expectation_value(problem, probs):
@@ -91,8 +91,8 @@ def comparable_expectation_value(problem, probs):
 
 def approximation_ratio(problem, probs):
     expectation = comparable_expectation_value(problem, probs)
-    best_known_solutions = knapsack.classical_solutions(problem)
+    best_known_solutions = KnapsackMethod.classical_solutions(problem)
     choice = best_known_solutions[0]
-    best_value = knapsack.value(choice, problem)
+    best_value = KnapsackMethod.value(choice, problem)
     ratio = expectation / best_value
     return ratio
