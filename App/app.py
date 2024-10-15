@@ -7,6 +7,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
+import time
 
 # Get the absolute path of the current file (app.py)
 current_file = Path(__file__).resolve()
@@ -109,7 +110,7 @@ if st.sidebar.button("Optimize Portfolio"):
     else:
         # Display loading animation
         with st.spinner("Quantum particles are optimizing your portfolio..."):
-
+            start_time = time.time()
             
             # Perform mean-variance optimization
             mv_method = MeanVarianceMethod(stock_list, start_date, end_date)
@@ -118,9 +119,12 @@ if st.sidebar.button("Optimize Portfolio"):
             # Call the main quantum function
             higher_prob_key_reversed, higher_prob_key, best_known_solution, approximation_ratio = quantum_main(optimized_weights, budget)
             
+            end_time = time.time()
+            time_taken = end_time - start_time
+            
             # Display results
             st.write("### Quantum Optimization Results")
-            
+            st.markdown(f"<span style='color: #00FF00;'>Time taken for optimization: {time_taken:.2f} seconds</span>", unsafe_allow_html=True)
             st.write("#### Optimized Weights")
             optimized_weights_dict = {stock: weight for stock, weight in zip(stock_list, optimized_weights)}
             st.write(optimized_weights_dict)
