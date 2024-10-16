@@ -23,6 +23,10 @@ This project was built for [Quantathon 2.0](https://quantathon-o.devfolio.co/) u
 - Quantum-enhanced portfolio optimization
 - Interactive visualizations of results
 
+## Theoretical Background
+
+For more detailed information about the theoretical aspects of this project, including the quantum algorithms and optimization techniques used, please refer to the [Backend Theory README](./backend_theoretical/README.md).
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
