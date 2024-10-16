@@ -90,15 +90,12 @@ $$
 
 A classical computer searches for the optimal parameters $ (\gamma^*, \beta^*) $ to maximize the averaged output $ f(\gamma^*, \beta^*) $:
 
-$$
-(\gamma^*, \beta^*) = \arg\max_{\vec{\gamma}, \vec{\beta}} f_p(\vec{\gamma}, \vec{\beta})
-$$
+![image](https://github.com/user-attachments/assets/478841fe-4c91-4b11-aaa8-b933ef1800ea)
 
 The approximate ratio showing the QAOA performance is given by:
 
-$$
-r = \frac{f_p(\vec{\gamma}^*, \vec{\beta}^*)}{f_{\text{max}}}
-$$
+![image](https://github.com/user-attachments/assets/9337e408-cb40-4e26-bbe2-89d09f479ba6)
+
 
 Searching for the approximate ratio typically starts with a random initial estimate of the parameters and employs gradient-based optimization.
 
