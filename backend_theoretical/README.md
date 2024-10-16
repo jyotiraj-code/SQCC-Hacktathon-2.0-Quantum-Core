@@ -72,6 +72,18 @@ $$\frac{f(z)}{f_{\text{max}}} \geq r^*$$
 
 where $f_{\text{max}} = \max_z f(z)$, and $r^*$ is the desired approximation ratio.
 
+## Quantum Approximate Optimization Algorithm (QAOA)
+
+In combinatorial optimization, QAOA excels as a hybrid quantum-classical algorithm tailored for quantum computing while leveraging classical computing strengths. It effectively addresses NP-hard problems, including Max-Cut, the traveling salesman problem, and quadratic unconstrained binary optimization (QUBO).
+
+### Problem Definition
+
+Given a combinatorial optimization problem involving an N-bit binary string represented as $z = z_1 \ldots z_N$ with a classical objective function $f(z): \{0,1\}^N \rightarrow \mathbb{R}$ to be maximized, the goal is to find a solution $z$ that satisfies the approximation condition: 
+
+$$\frac{f(z)}{f_{\text{max}}} \geq r^*$$
+
+where $f_{\text{max}} = \max_z f(z)$, and $r^*$ is the desired approximation ratio.
+
 ### QAOA Algorithm
 
 The QAOA algorithm tackles this problem by encoding the classical objective function $f(z)$ into the phase Hamiltonian $H_c$ to find the optimal eigenvalues:
@@ -95,8 +107,10 @@ $$f_p(\vec{\gamma}, \vec{\beta}) = \langle \psi_p(\vec{\gamma}, \vec{\beta}) | H
 A classical computer searches for the optimal parameters $(\gamma^*, \beta^*)$ to maximize the averaged output $f(\gamma^*, \beta^*)$:
 
 $$(\gamma^*, \beta^*) = \arg\max_{\vec{\gamma}, \vec{\beta}} f_p(\vec{\gamma}, \vec{\beta})$$
+
 The approximate ratio showing the QAOA performance is given by:
 
 $$r = \frac{f_p(\vec{\gamma}^*, \vec{\beta}^*)}{f_{\text{max}}}$$
 
 Searching for the approximate ratio typically starts with a random initial estimate of the parameters and employs gradient-based optimization.
+
