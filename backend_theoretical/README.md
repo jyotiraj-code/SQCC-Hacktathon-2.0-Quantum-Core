@@ -42,3 +42,7 @@ Here,
 The Standard Deviation is a statistical measure used as an indicator of the
 uncertainty or risk linked to return. It is illustrated as: 
 $$\sigma^2_i = \frac{1}{N} \sum_{j=1}^{N}\left[R_j - E(R_j)\right]^2$$
+
+The covariance of returns measures the relative riskiness of a security within a portfolio of
+securities, suppose for two securities we will have: $$\sigma_{ij} = E\left[(R_i - E(R_i))(R_j - E(R_j))\right]$$
+
