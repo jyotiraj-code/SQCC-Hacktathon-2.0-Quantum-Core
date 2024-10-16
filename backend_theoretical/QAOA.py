@@ -6,7 +6,7 @@ from qiskit.circuit import Parameter
 import numpy as np
 import math
 from .KnapsackMethod import KnapsackProblem
-from .Circuits import DephaseValue, QuantumWalkMixer
+from .Circuits import Dephase, QWMixer
 
 class QuantumWalkQAOA(QuantumCircuit):
     def __init__(self, problem: KnapsackProblem, p: int, m: int):
@@ -26,8 +26,8 @@ class QuantumWalkQAOA(QuantumCircuit):
         flag_regs = [flag_x, flag_neighbor, flag_both]
         print("Number of qubits:", len(choice_reg) + len(weight_reg) + len(flag_regs))
         super().__init__(choice_reg, weight_reg, *flag_regs, name=f"QuantumWalkQAOA {m=},{p=}")
-        phase_circ = DephaseValue(choice_reg, problem)
-        mix_circ = QuantumWalkMixer(choice_reg, weight_reg, flag_regs, problem, m)
+        phase_circ = Dephase(choice_reg, problem)
+        mix_circ = QWMixer(choice_reg, weight_reg, flag_regs, problem, m)
         for gamma, beta in zip(self.gammas, self.betas):
             super().append(phase_circ.to_instruction({phase_circ.gamma: gamma}), choice_reg)
             super().append(mix_circ.to_instruction({mix_circ.beta: beta}), [*choice_reg, *weight_reg, *flag_regs])
