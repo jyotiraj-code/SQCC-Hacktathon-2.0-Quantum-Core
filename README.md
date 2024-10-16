@@ -22,6 +22,10 @@ This project was built for [Quantathon 2.0](https://quantathon-o.devfolio.co/) u
 - Adjust budget (number of stocks to include)
 - Quantum-enhanced portfolio optimization
 - Interactive visualizations of results
+- Comparison between quantum and classical optimization methods:
+  - Side-by-side visualization of selected stocks
+  - Approximation ratio to quantify the quantum solution's performance relative to the classical solution
+- Visual representation of stock selection differences between methods
 
 ## Theoretical Background
 
