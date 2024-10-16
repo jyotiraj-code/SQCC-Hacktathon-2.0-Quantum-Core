@@ -95,7 +95,6 @@ $$f_p(\vec{\gamma}, \vec{\beta}) = \langle \psi_p(\vec{\gamma}, \vec{\beta}) | H
 A classical computer searches for the optimal parameters $(\gamma^*, \beta^*)$ to maximize the averaged output $f(\gamma^*, \beta^*)$:
 
 $$(\gamma^*, \beta^*) = \arg\max_{\vec{\gamma}, \vec{\beta}} f_p(\vec{\gamma}, \vec{\beta})$$
-
 The approximate ratio showing the QAOA performance is given by:
 
 $$r = \frac{f_p(\vec{\gamma}^*, \vec{\beta}^*)}{f_{\text{max}}}$$
