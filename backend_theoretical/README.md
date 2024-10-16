@@ -36,5 +36,11 @@ One of the most studied models in portfolio optimization is the Markowitz model,
 $$R_i = \sum_{t=1}^{\infty} d_{it} r_{it}$$
 
 Here, 
-- $r_{it} indicates anticipated return at time t  per stock invested in
-- $d_{it} is the rate at which return in the
+- $r_{it}$ indicates anticipated return at time t  per stock invested in
+- $d_{it}$ is the rate at which return in the $i_{th}$ security where time t is discounted back to presents.
+
+The Standard Deviation is a statistical measure used as an indicator of the
+uncertainty or risk linked to return. It is illustrated as: 
+$$
+\sigma^2_i = \frac{1}{N} \sum_{j=1}^{N} \left[R_j - E(R_j)\right]^2
+$$
