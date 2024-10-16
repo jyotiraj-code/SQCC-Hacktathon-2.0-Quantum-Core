@@ -6,7 +6,7 @@ from qiskit import Aer, transpile, execute
 from qiskit.circuit import Parameter
 import numpy as np
 import math
-from KnapsackMethod import KnapsackProblem
+from .KnapsackMethod import KnapsackProblem
 
 class QFT(QuantumCircuit):
     def __init__(self, register):
@@ -84,7 +84,7 @@ class QWMixer(QuantumCircuit):
         super().__init__(choice_reg, weight_reg, *flag_regs, name=f"QWalkMixer_{m=}")
         for __ in range(m):
             for j in range(problem.N):
-                jwalk = SingleQubitQuantumWalk(choice_reg, weight_reg, flag_regs, problem, j)
+                jwalk = SQQW(choice_reg, weight_reg, flag_regs, problem, j)
                 super().append(jwalk.to_instruction({jwalk.beta: self.beta / m}), [*choice_reg, *weight_reg, *flag_regs])
 
 class Dephase(QuantumCircuit):
