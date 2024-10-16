@@ -257,3 +257,9 @@ The `Circuits.py` module implements a quantum algorithm for solving the knapsack
 - **SQQW Class**: Represents a single-qubit quantum walk that adjusts the amplitude based on the feasibility of neighboring states, enabling effective exploration of the state space.
 
 - **QWMixer Class**: Implements the quantum walk mixer that refines the amplitudes of states based on feasibility conditions, enhancing the convergence towards optimal solutions in the quantum algorithm.
+
+
+References:
+- A Novel Knapsack-based Financial Portfolio Optimization using Quantum Approximate Optimization Algorithm Hout et al. (https://arxiv.org/html/2402.07123v2#:~:text=QAOA%20has%20been%20employed%20as,of%20either%200%20or%201.)
+- Speidell L S, Miller D H and Ullman J R 1989 Financial Analysts Journal 45 22–30
+- Ausiello G, Crescenzi P, Gambosi G, Kann V, Marchetti-Spaccamela A and Protasi M 1999 Complexity and Approximation. Springer-Verlag
