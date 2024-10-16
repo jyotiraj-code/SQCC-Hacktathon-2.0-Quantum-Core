@@ -128,19 +128,64 @@ if st.sidebar.button("Optimize Portfolio"):
             st.write("#### Optimized Weights")
             optimized_weights_dict = {stock: weight for stock, weight in zip(stock_list, optimized_weights)}
             st.write(optimized_weights_dict)
+                        # Convert best_known_solution to a list, handling the n-d array case
+            if isinstance(best_known_solution, np.ndarray):
+                best_known_solution_list = best_known_solution.flatten().tolist()
+            else:
+                st.error(f"Unexpected type for best_known_solution: {type(best_known_solution)}")
+                st.write("Best known solution:", best_known_solution)
+                st.stop()
             
-            selected_stocks = [stock for i, stock in enumerate(stock_list) if higher_prob_key_reversed[i] == '1']
-            st.write(f"Best known solution: {best_known_solution}")
-            st.write(f"Approximation ratio: {approximation_ratio}")
-
-            # Show selected stocks based on higher_prob_key_reversed
-            st.write(f"### Suggested Stocks for Portfolio:")
-            for stock in selected_stocks:
+            quantum_selected_stocks = [stock for i, stock in enumerate(stock_list) if higher_prob_key_reversed[i] == '1']
+            classical_selected_stocks = [stock for i, stock in enumerate(stock_list) if best_known_solution_list[i] == 1]
+            
+            st.write("### Quantum Method Results and Visualization")
+            st.write("#### Quantum Method Selected Stocks:")
+            for stock in quantum_selected_stocks:
                 st.markdown(f"<span style='background-color: #4CAF50; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
             
-            st.write("#### Selected Stocks")
-            fig_donut = create_donut_chart(stock_list, selected_stocks)
-            st.plotly_chart(fig_donut, use_container_width=True)
+            st.write("#### Quantum Method Visualization")
+            fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks)
+            st.plotly_chart(fig_donut_quantum, use_container_width=True, key="quantum_donut_1")
+
+            st.write("### Comparison: Quantum vs Classical Method")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.write("#### Quantum Method Selected Stocks:")
+                for stock in quantum_selected_stocks:
+                    st.markdown(f"<span style='background-color: #4CAF50; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                
+                st.write("#### Quantum Method Visualization")
+                fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks)
+                st.plotly_chart(fig_donut_quantum, use_container_width=True,key="quantum_donut")
+            
+            with col2:
+                st.write("#### Classical Method Selected Stocks:")
+                for stock in classical_selected_stocks:
+                    st.markdown(f"<span style='background-color: #FFA500; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                
+                st.write("#### Classical Method Visualization")
+                fig_donut_classical = create_donut_chart(stock_list, classical_selected_stocks)
+                st.plotly_chart(fig_donut_classical, use_container_width=True,key="classical_donut")
+            
+            st.write("### Performance Comparison")
+            st.write(f"Approximation ratio: {approximation_ratio}")
+            st.write("The approximation ratio compares the performance of the quantum method to the classical method.")
+            st.write("A ratio closer to 1 indicates that the quantum method's performance is closer to the classical method's performance.")
+            
+            # Calculate the difference in selected stocks
+            different_stocks = set(quantum_selected_stocks).symmetric_difference(set(classical_selected_stocks))
+            if different_stocks:
+                st.write("### Differences in Stock Selection")
+                st.write("The following stocks were selected differently by the two methods:")
+                for stock in different_stocks:
+                    method = "Quantum" if stock in quantum_selected_stocks else "Classical"
+                    st.markdown(f"<span style='background-color: {'#4CAF50' if method == 'Quantum' else '#FFA500'}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock} ({method})</span>", unsafe_allow_html=True)
+            else:
+                st.write("### Stock Selection Comparison")
+                st.write("Both methods selected the same stocks for the portfolio.")
 
 # Add some final touches
 st.sidebar.markdown("---")

@@ -4,6 +4,15 @@ Quantum Stock Optimization is a Streamlit-based web application that combines Qu
 
 # Deployed link - https://qwm-qaoa-based-portfolio-optimization.onrender.com/
 
+> **Note on Performance:**
+> 
+> The project is deployed on a free service with limited computing resources, which may result in extended processing times. For example:
+> 
+> - On the deployed version: The default placeholder data may take over 1 minute to process.
+> - On a local system: Performance can be significantly better. For instance, on an M1 MacBook Air, the same operation takes approximately 5 seconds.
+> 
+> For optimal performance and faster results, we recommend running the application locally on a system with adequate computational power.
+
 This project was built for [Quantathon 2.0](https://quantathon-o.devfolio.co/) under the Quantum-core track. The problem statement addressed is "Portfolio Optimization based on Quantum Walks".
 
 ## Features
