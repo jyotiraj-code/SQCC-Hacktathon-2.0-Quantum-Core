@@ -6,7 +6,7 @@ from qiskit import Aer, transpile, execute
 from qiskit.circuit import Parameter
 import numpy as np
 import math
-from .KnapsackMethod import KnapsackProblem
+from KnapsackMethod import KnapsackProblem
 
 class QFT(QuantumCircuit):
     def __init__(self, register):
@@ -17,7 +17,7 @@ class QFT(QuantumCircuit):
                 k = idx - c_idx + 1
                 super().cp(2 * np.pi / 2**k, qubit, control_qubit)
 
-class Add(QuantumCircuit):
+class Addition(QuantumCircuit):  # Changed from Add to Addition
     def __init__(self, register, n, control=None):
         self.register = register
         self.control = control
@@ -26,9 +26,9 @@ class Add(QuantumCircuit):
         binary = list(map(int, reversed(bin(n)[2:])))
         for idx, value in enumerate(binary):
             if value:
-                self._add_power_of_two(idx)
+                self.power_two_addition(idx)  # Changed method name here
 
-    def _add_power_of_two(self, k):
+    def power_two_addition(self, k):  # Changed from _add_power_of_two to power_two_addition
         phase_gate = super().p
         if self.control is not None:
             phase_gate = partial(super().cp, target_qubit=self.control)
@@ -38,7 +38,7 @@ class Add(QuantumCircuit):
                 m = l - k
                 phase_gate(2 * np.pi / 2**m, qubit)
 
-class FeasibilityOracle(QuantumCircuit):
+class FbsOracle(QuantumCircuit):  # Changed from FeasibilityOracle to FbsOracle
     def __init__(self, choice_reg, weight_reg, flag_qubit, problem, clean_up=True):
         c = math.floor(math.log2(problem.max_weight)) + 1
         w0 = 2**c - problem.max_weight - 1
@@ -46,9 +46,9 @@ class FeasibilityOracle(QuantumCircuit):
         qft = QFT(weight_reg)
         subcirc.append(qft.to_instruction(), weight_reg)
         for qubit, weight in zip(choice_reg, problem.weights):
-            adder = Add(weight_reg, weight, control=[qubit]).to_instruction()
+            adder = Addition(weight_reg, weight, control=[qubit]).to_instruction()  # Changed from Add to Addition
             subcirc.append(adder, [*weight_reg, qubit])
-        adder = Add(weight_reg, w0)
+        adder = Addition(weight_reg, w0)  # Changed from Add to Addition
         subcirc.append(adder.to_instruction(), weight_reg)
         subcirc.append(qft.inverse().to_instruction(), weight_reg)
         super().__init__(choice_reg, weight_reg, flag_qubit, name="U_v")
@@ -59,12 +59,12 @@ class FeasibilityOracle(QuantumCircuit):
         if clean_up:
             super().append(subcirc.inverse().to_instruction(), [*choice_reg, *weight_reg])
 
-class SingleQubitQuantumWalk(QuantumCircuit):
+class SQQW(QuantumCircuit):  # Changed from SingleQubitQuantumWalk to SQQW
     def __init__(self, choice_reg, weight_reg, flag_regs, problem: KnapsackProblem, j: int):
         flag_x, flag_neighbor, flag_both = flag_regs
         self.beta = Parameter("beta")
-        super().__init__(choice_reg, weight_reg, *flag_regs, name=f"SingleQubitQuantumWalk_{j=}")
-        feasibility_oracle = FeasibilityOracle(choice_reg, weight_reg, flag_x, problem)
+        super().__init__(choice_reg, weight_reg, *flag_regs, name=f"SQQW_{j=}")
+        feasibility_oracle = FbsOracle(choice_reg, weight_reg, flag_x, problem)  # Changed class name here
         super().append(feasibility_oracle.to_instruction(), [*choice_reg, *weight_reg, flag_x])
         super().x(choice_reg[j])
         super().append(feasibility_oracle.to_instruction(), [*choice_reg, *weight_reg, flag_neighbor])
@@ -76,18 +76,18 @@ class SingleQubitQuantumWalk(QuantumCircuit):
         super().append(feasibility_oracle.to_instruction(), [*choice_reg, *weight_reg, flag_neighbor])
         super().x(choice_reg[j])
         super().append(feasibility_oracle.to_instruction(), [*choice_reg, *weight_reg, flag_x])
-
-class QuantumWalkMixer(QuantumCircuit):
+        
+class QWMixer(QuantumCircuit):
     def __init__(self, choice_reg, weight_reg, flag_regs, problem: KnapsackProblem, m: int):
         flag_x, flag_neighbor, flag_both = flag_regs
         self.beta = Parameter("beta")
-        super().__init__(choice_reg, weight_reg, *flag_regs, name=f"QuantumWalkMixer_{m=}")
+        super().__init__(choice_reg, weight_reg, *flag_regs, name=f"QWalkMixer_{m=}")
         for __ in range(m):
             for j in range(problem.N):
                 jwalk = SingleQubitQuantumWalk(choice_reg, weight_reg, flag_regs, problem, j)
                 super().append(jwalk.to_instruction({jwalk.beta: self.beta / m}), [*choice_reg, *weight_reg, *flag_regs])
 
-class DephaseValue(QuantumCircuit):
+class Dephase(QuantumCircuit):
     def __init__(self, choice_reg, problem):
         self.gamma = Parameter("gamma")
         super().__init__(choice_reg, name="Dephase Value")
