@@ -41,6 +41,4 @@ Here,
 
 The Standard Deviation is a statistical measure used as an indicator of the
 uncertainty or risk linked to return. It is illustrated as: 
-$$
-\sigma^2_i = \frac{1}{N} \sum_{j=1}^{N} \left[R_j - E(R_j)\right]^2
-$$
+$$\sigma^2_i = \frac{1}{N} \sum_{j=1}^{N} [R_j - E(R_j)\right]^2$$
