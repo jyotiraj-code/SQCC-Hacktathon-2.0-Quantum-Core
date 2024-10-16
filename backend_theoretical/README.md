@@ -33,4 +33,4 @@ The portfolio optimization process includes the following steps:
 One of the most studied models in portfolio optimization is the Markowitz model, represented as:
 
 
-$$R_i = \sum_{t=1}^{\infty} \frac{d_it}{r_it}$$
+$$R_i = \sum_{t=1}^{\infty} d_it r_it$$
