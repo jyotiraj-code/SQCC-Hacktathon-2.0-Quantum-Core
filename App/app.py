@@ -138,7 +138,8 @@ if st.sidebar.button("Optimize Portfolio"):
             st.write("### Quantum Method Results and Visualization")
             st.write("#### Quantum Method Selected Stocks:")
             for stock in quantum_selected_stocks:
-                st.markdown(f"<span style='background-color: #4CAF50; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                color = color_map[stock_list.index(stock) % len(color_map)]
+                st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
             
             st.write("#### Quantum Method Visualization")
             fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks, color_map)
@@ -149,11 +150,19 @@ if st.sidebar.button("Optimize Portfolio"):
             col1, col2 = st.columns(2)
             
             with col1:
+                st.write("#### Quantum Method Selected Stocks:")
+                for stock in quantum_selected_stocks:
+                    color = color_map[stock_list.index(stock) % len(color_map)]
+                    st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
                 st.write("#### Quantum Method Visualization")
                 fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks, color_map)
                 st.plotly_chart(fig_donut_quantum, use_container_width=True, key="quantum_donut")
             
             with col2:
+                st.write("#### Classical Method Selected Stocks:")
+                for stock in classical_selected_stocks:
+                    color = color_map[stock_list.index(stock) % len(color_map)]
+                    st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
                 st.write("#### Classical Method Visualization")
                 fig_donut_classical = create_donut_chart(stock_list, classical_selected_stocks, color_map)
                 st.plotly_chart(fig_donut_classical, use_container_width=True, key="classical_donut")
