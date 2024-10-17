@@ -61,8 +61,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title and description
-st.title("Quantum Stock Optimization")
-st.markdown("Combining **Quantum Computing** with **Mean-Variance Optimization** for stock portfolios.")
+st.title("Quantum Portfolio Optimization")
+st.markdown("**Quantum Walk Mixer** Based **QAOA** method for Portfolio Optimization")
 
 # User inputs
 st.sidebar.header("Portfolio Selection")
