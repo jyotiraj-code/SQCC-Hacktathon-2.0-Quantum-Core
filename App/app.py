@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta, date
 import sys
 import os
 from pathlib import Path
@@ -70,6 +70,12 @@ stocks = st.sidebar.text_input("Enter stock tickers (comma-separated)", "AAPL, G
 start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1))
 end_date = st.sidebar.date_input("End Date", datetime(2023, 1, 1))
 budget = st.sidebar.slider("Budget (number of stocks to include)", min_value=1, max_value=len(stocks.split(','))-1, value=1)
+
+# Prevent users from entering data beyond yesterday's date
+yesterday = date.today() - timedelta(days=1)
+if end_date > yesterday:
+    st.sidebar.error("End date cannot be beyond yesterday's date.")
+    st.stop()
 
 # Color scheme for donut charts
 color_map = px.colors.qualitative.Plotly
