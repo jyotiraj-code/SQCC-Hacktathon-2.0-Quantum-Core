@@ -17,20 +17,47 @@ This project was built for [Quantathon 2.0](https://quantathon-o.devfolio.co/) u
 
 ## Features
 
-- Input multiple stock tickers
-- Select date range for historical data
-- Adjust budget (number of stocks to include)
-- Quantum-enhanced portfolio optimization
-- Interactive visualizations of results
-- Comparison between quantum and classical optimization methods:
-  - Side-by-side visualization of selected stocks
-  - Approximation ratio to quantify the quantum solution's performance relative to the classical solution
-- Visual representation of stock selection differences between methods
+- **Multiple Stock Ticker Input**: Enter multiple stock tickers for analysis.
+- **Date Range Selection**: Choose a start and end date for historical data retrieval.
+- **Budget Adjustment**: Set the number of stocks to include in the portfolio.
+- **Quantum-Enhanced Portfolio Optimization**: Leverage quantum algorithms for optimizing stock portfolios.
+- **Interactive Visualizations**: View results through dynamic charts and graphs.
+- **Comparison of Optimization Methods**:
+  - Side-by-side visualization of stocks selected by quantum and classical methods.
+  - Approximation ratio to evaluate the quantum solution's performance relative to the classical solution.
+- **Visual Representation of Stock Selection Differences**: Highlight differences in stock selection between quantum and classical methods.
+- **Historical Stock Trends**: 
+  - View historical stock trends for the selected tickers within the specified date range.
+  - Historical trends are displayed using interactive charts and graphs.
+  - This feature helps users analyze past performance and make informed decisions.
+- **Session State Management**: Utilizes Streamlit's session state to manage the visibility of historical trends and ensure a smooth user experience.
 
 ## Theoretical Background
 
 For more detailed information about the theoretical aspects of this project, including the quantum algorithms and optimization techniques used, please refer to the [Backend Theory README](./backend_theoretical/README.md).
 
+## How to Use
+
+1. **Launch the App**: Start the Streamlit app by running the following command in your terminal:
+   ```bash
+   streamlit run App/app.py
+   ```
+
+2. **Input Stock Tickers**: Enter the stock tickers you wish to analyze in the sidebar input field, separated by commas.
+
+3. **Select Date Range**: Choose the start and end dates for the historical data you want to analyze.
+
+4. **Adjust Budget**: Use the slider to set the number of stocks to include in your portfolio.
+
+5. **View Historical Trends**: Expand the "Show/Hide Historical Stock Trends" section to view historical price trends for the selected stocks.
+
+6. **Optimize Portfolio**: Click the "Optimize Portfolio" button to perform quantum-enhanced optimization. The historical trends will automatically be hidden to focus on the results.
+
+7. **Review Results**: Examine the optimized portfolio weights, visualizations, and comparison between quantum and classical methods.
+
+8. **Explore Differences**: Check the differences in stock selection between the two optimization methods.
+
+9. **Adjust and Re-run**: Modify inputs as needed and re-run the optimization to explore different scenarios.
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
