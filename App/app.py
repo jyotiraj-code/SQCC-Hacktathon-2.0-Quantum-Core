@@ -81,6 +81,12 @@ if end_date > date.today():
 # Color scheme for charts
 color_map = px.colors.qualitative.Plotly
 
+def get_company_name(ticker):
+    try:
+        company_info = yf.Ticker(ticker).info
+        return company_info.get('longName', ticker)
+    except Exception as e:
+        return ticker
 def plot_stock_trends(tickers, start_date, end_date):
     for i, ticker in enumerate(tickers):
         try:
@@ -88,12 +94,13 @@ def plot_stock_trends(tickers, start_date, end_date):
             if data.empty:
                 st.error(f"No data found for {ticker}. It might be an invalid ticker.")
                 continue
+            company_name = get_company_name(ticker)
             fig = go.Figure()
-            fig.add_trace(go.Scatter(x=data.index, y=data['Close'], name=ticker, line=dict(color=color_map[i % len(color_map)])))
+            fig.add_trace(go.Scatter(x=data.index, y=data['Close'], name=company_name, line=dict(color=color_map[i % len(color_map)])))
             fig.update_layout(
-                title=f"Historical Stock Prices for {ticker}",
+                title=f"Historical Stock Prices for {company_name} ({ticker})",
                 xaxis_title="Date",
-                yaxis_title="Close Price",
+                yaxis_title="Close Price (in Dollars)",
                 height=400,
                 width=800,
                 xaxis_rangeslider_visible=True
@@ -158,7 +165,7 @@ if st.sidebar.button("Optimize Portfolio"):
                 st.write("### Quantum Optimization Results")
                 st.markdown(f"<span style='color: #00FF00;'>Time taken for optimization: {time_taken:.2f} seconds</span>", unsafe_allow_html=True)
                 st.write("#### Optimized Weights")
-                optimized_weights_dict = {stock: weight for stock, weight in zip(stock_list, optimized_weights)}
+                optimized_weights_dict = {f"{get_company_name(stock)} ({stock})": weight for stock, weight in zip(stock_list, optimized_weights)}
                 st.write(optimized_weights_dict)
                 
                 # Convert best_known_solution to a list, handling the n-d array case
@@ -176,7 +183,7 @@ if st.sidebar.button("Optimize Portfolio"):
                 st.write("#### Quantum Method Selected Stocks:")
                 for stock in quantum_selected_stocks:
                     color = color_map[stock_list.index(stock) % len(color_map)]
-                    st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                    st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{get_company_name(stock)} ({stock})</span>", unsafe_allow_html=True)
                 
                 st.write("#### Quantum Method Visualization")
                 fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks, color_map)
@@ -190,7 +197,7 @@ if st.sidebar.button("Optimize Portfolio"):
                     st.write("#### Quantum Method Selected Stocks:")
                     for stock in quantum_selected_stocks:
                         color = color_map[stock_list.index(stock) % len(color_map)]
-                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{get_company_name(stock)} ({stock})</span>", unsafe_allow_html=True)
                     st.write("#### Quantum Method Visualization")
                     fig_donut_quantum = create_donut_chart(stock_list, quantum_selected_stocks, color_map)
                     st.plotly_chart(fig_donut_quantum, use_container_width=True, key="quantum_donut")
@@ -199,7 +206,7 @@ if st.sidebar.button("Optimize Portfolio"):
                     st.write("#### Classical Method Selected Stocks:")
                     for stock in classical_selected_stocks:
                         color = color_map[stock_list.index(stock) % len(color_map)]
-                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock}</span>", unsafe_allow_html=True)
+                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{get_company_name(stock)} ({stock})</span>", unsafe_allow_html=True)
                     st.write("#### Classical Method Visualization")
                     fig_donut_classical = create_donut_chart(stock_list, classical_selected_stocks, color_map)
                     st.plotly_chart(fig_donut_classical, use_container_width=True, key="classical_donut")
@@ -218,7 +225,7 @@ if st.sidebar.button("Optimize Portfolio"):
                     for stock in different_stocks:
                         method = "Quantum" if stock in quantum_selected_stocks else "Classical"
                         color = color_map[stock_list.index(stock) % len(color_map)]  # Unified color scheme for the stocks
-                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{stock} ({method})</span>", unsafe_allow_html=True)
+                        st.markdown(f"<span style='background-color: {color}; padding: 5px 10px; border-radius: 20px; margin: 5px;'>{get_company_name(stock)} ({stock}) ({method})</span>", unsafe_allow_html=True)
                 else:
                     st.write("### Stock Selection Comparison")
                     st.write("Both methods selected the same stocks for the portfolio.")
