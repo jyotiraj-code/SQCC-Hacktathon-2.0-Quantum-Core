@@ -70,7 +70,7 @@ st.sidebar.header("Portfolio Selection")
 stocks = st.sidebar.text_input("Enter stock tickers (comma-separated)", "AAPL, GOOGL, MSFT, AMZN")
 # Set min_value to a date earlier than 2010
 start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1), min_value=datetime(1900, 1, 1))
-end_date = st.sidebar.date_input("End Date", date.today(), min_value=datetime(1900, 1, 1))
+end_date = st.sidebar.date_input("End Date", datetime(2023, 1, 1), min_value=datetime(1900, 1, 1))
 budget = st.sidebar.slider("Budget (number of stocks to include)", min_value=1, max_value=len(stocks.split(','))-1, value=1)
 
 # Prevent users from entering data beyond today's date
@@ -107,25 +107,7 @@ stock_list = [s.strip().upper() for s in stocks.split(",")]
 
 # Use an expander to show/hide historical stock trends
 with st.expander("Show/Hide Historical Stock Trends", expanded=True):
-    for i, ticker in enumerate(stock_list):
-        try:
-            data = yf.download(ticker, start=start_date, end=end_date)
-            if data.empty:
-                st.error(f"No data found for {ticker}. It might be an invalid ticker.")
-                continue
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x=data.index, y=data['Close'], name=ticker, line=dict(color=color_map[i % len(color_map)])))
-            fig.update_layout(
-                title=f"Historical Stock Prices for {ticker}",
-                xaxis_title="Date",
-                yaxis_title="Close Price",
-                height=400,
-                width=800,
-                xaxis_rangeslider_visible=True
-            )
-            st.plotly_chart(fig, use_container_width=True)
-        except Exception as e:
-            st.error(f"Error fetching data for {ticker}: {str(e)}")
+    plot_stock_trends(stock_list, start_date, end_date)
 
 # Function to create donut chart with unified color and legend order
 def create_donut_chart(stock_list, selected_stocks, color_map):
