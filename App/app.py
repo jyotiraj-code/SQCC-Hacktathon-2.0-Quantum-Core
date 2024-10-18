@@ -68,8 +68,9 @@ st.markdown("**Quantum Walk Mixer** Based **QAOA** method for Portfolio Optimiza
 # User inputs
 st.sidebar.header("Portfolio Selection")
 stocks = st.sidebar.text_input("Enter stock tickers (comma-separated)", "AAPL, GOOGL, MSFT, AMZN")
-start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1))
-end_date = st.sidebar.date_input("End Date", date.today())
+# Set min_value to a date earlier than 2010
+start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1), min_value=datetime(1900, 1, 1))
+end_date = st.sidebar.date_input("End Date", date.today(), min_value=datetime(1900, 1, 1))
 budget = st.sidebar.slider("Budget (number of stocks to include)", min_value=1, max_value=len(stocks.split(','))-1, value=1)
 
 # Prevent users from entering data beyond today's date

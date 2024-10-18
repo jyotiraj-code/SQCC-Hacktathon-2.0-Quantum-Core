@@ -13,6 +13,12 @@ class MeanVarianceMethod:
         self.stocks = stocks
         self.prices = ohlc["Adj Close"].dropna(how="all")
         
+        # Check for invalid tickers
+        valid_tickers = self.prices.columns
+        invalid_tickers = set(stocks) - set(valid_tickers)
+        if invalid_tickers:
+            raise ValueError(f"Invalid tickers: {', '.join(invalid_tickers)}")
+    
     def covariance(self):
         cov = risk_models.CovarianceShrinkage(self.prices).ledoit_wolf()
         return cov
